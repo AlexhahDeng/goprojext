@@ -29,7 +29,11 @@ func txt2ref(txt string) (string, error) {
 
 // split ref into sub items
 func splitRef(ref string) ([]string, error) {
-	return nil, nil
+	// construct regexp
+	r := regexp.MustCompile("\\[\\d+\\]")
+
+	rSlice := r.Split(ref, -1)
+	return rSlice, nil
 }
 func main() {
 	txt, err := pdf2txt("he.pdf")
@@ -42,6 +46,12 @@ func main() {
 		fmt.Println(err)
 		return
 	}
-	fmt.Println(ref)
+	//fmt.Println(ref)
 
+	refSlice, err := splitRef(ref)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	fmt.Println("number of ref:", len(refSlice))
 }
